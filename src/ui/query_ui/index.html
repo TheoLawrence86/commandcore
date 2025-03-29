@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommandCore - Knowledge Query Interface</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-javascript.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="js/script.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="navbar-brand">
+                <span class="navbar-brand-icon">⚙️</span> CommandCore
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Query</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../ingestion_ui/index.html" class="nav-link">Ingestion</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>CommandCore</h1>
+            <p>AI Agent Orchestration with Domain-Specific Knowledge</p>
+            <div class="domain-selector-container">
+                <label for="domain-selector">Knowledge Domain:</label>
+                <select id="domain-selector">
+                    <option value="">All Domains</option>
+                    <option value="ai">AI</option>
+                    <option value="cloud">Cloud Computing</option>
+                    <option value="virt-os">Virtualisation/OS</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="chat-window" id="chat-window">
+            <!-- Welcome message -->
+            <div class="chat-message system-message">
+                <div class="message-icon">
+                    <span>⚙️</span>
+                </div>
+                <div class="message-content">
+                    <h2>Chat with your data</h2>
+                    <p>Ask anything or try an example</p>
+                    
+                    <div class="example-questions">
+                        <div class="example-question" onclick="document.getElementById('query-input').value = this.textContent; document.getElementById('query-input').focus();">
+                            How to install ATAK?
+                        </div>
+                        <div class="example-question" onclick="document.getElementById('query-input').value = this.textContent; document.getElementById('query-input').focus();">
+                            What are the steps to set up a new server?
+                        </div>
+                        <div class="example-question" onclick="document.getElementById('query-input').value = this.textContent; document.getElementById('query-input').focus();">
+                            Explain the RAG pipeline architecture.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat messages will be populated here -->
+            <div id="chat-history"></div>
+            
+            <!-- Loading indicator -->
+            <div id="loading-indicator" class="hidden">
+                <div class="spinner"></div>
+                <p>Processing your query...</p>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <textarea id="query-input" placeholder="Type a new question (e.g. does my plan cover annual eye exams?)"></textarea>
+            <button id="submit-button" class="submit-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+
+        <div class="chat-actions">
+            <button id="clear-chat-btn" class="action-btn">
+                <span class="icon">🗑️</span> Clear chat
+            </button>
+            <button id="developer-settings-btn" class="action-btn">
+                <span class="icon">⚙️</span> Developer settings
+            </button>
+        </div>
+    </div>
+
+    <!-- Notification Element -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Templates for dynamic content -->
+    <template id="user-message-template">
+        <div class="chat-message user-message">
+            <div class="message-content">
+                <p class="message-text"></p>
+            </div>
+        </div>
+    </template>
+
+    <template id="assistant-message-template">
+        <div class="chat-message assistant-message">
+            <div class="message-icon">
+                <span>⚙️</span>
+            </div>
+            <div class="message-content">
+                <div class="message-text"></div>
+                <div class="message-citations"></div>
+                <div class="message-actions">
+                    <button class="action-icon" title="Show thinking process">
+                        <span>💡</span>
+                    </button>
+                    <button class="action-icon" title="Copy response">
+                        <span>📋</span>
+                    </button>
+                </div>
+                <div class="follow-up-questions"></div>
+            </div>
+        </div>
+    </template>
+</body>
+</html>

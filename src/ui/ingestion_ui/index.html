@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommandCore - Document Ingestion</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="../js/common.js"></script>
+    <script src="js/script.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="navbar-brand">
+                <span class="navbar-brand-icon">⚙️</span> CommandCore
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../query_ui/index.html" class="nav-link">Query</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Ingestion</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>CommandCore</h1>
+            <p>Document Ingestion Interface</p>
+        </header>
+
+        <div class="input-mode-selector card">
+            <h2>Add Knowledge Content</h2>
+            <div class="tab-container">
+                <button id="file-upload-tab" class="tab-button active">File Upload</button>
+                <button id="text-input-tab" class="tab-button">Text Input</button>
+            </div>
+        </div>
+
+        <!-- File Upload Mode -->
+        <div id="file-upload-mode" class="mode-container card">
+            <form id="upload-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file-input">Document File (PDF, TXT, DOCX)</label>
+                    <div class="file-upload-container">
+                        <div class="file-upload-area" id="drop-area">
+                            <p>Drag & drop a file here or</p>
+                            <label for="file-input" class="file-label">Browse Files</label>
+                            <input type="file" id="file-input" accept=".pdf,.txt,.docx" multiple>
+                            <p id="selected-file-name">No file selected</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="domain-select">Knowledge Domain</label>
+                    <select id="domain-select" required>
+                        <option value="" disabled selected>Select a domain</option>
+                        <option value="ai">Artificial Intelligence</option>
+                        <option value="cloud">Cloud Computing</option>
+                        <option value="virt-os">Virtualisation/OS</option>
+                    </select>
+                </div>
+
+                <div class="metadata-section">
+                    <div class="metadata-header">
+                        <h3>Metadata</h3>
+                        <p>We'll attempt to extract metadata automatically. You can also enter it manually.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="document-title">Document Title</label>
+                        <input type="text" id="document-title" placeholder="Will try to extract automatically">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="document-author">Author</label>
+                        <input type="text" id="document-author" placeholder="Will try to extract automatically">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="publication-date">Publication Date</label>
+                        <input type="date" id="publication-date" placeholder="Will try to extract automatically">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="document-url">Source URL (Optional)</label>
+                        <input type="url" id="document-url">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="additional-notes">Additional Notes (Optional)</label>
+                        <textarea id="additional-notes"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" id="upload-button" class="btn">Upload Document</button>
+            </form>
+        </div>
+
+        <!-- Text Input Mode -->
+        <div id="text-input-mode" class="mode-container card hidden">
+            <form id="text-form">
+                <div class="form-group">
+                    <label for="text-content">Text Content</label>
+                    <textarea id="text-content" placeholder="Paste your text content here..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="text-domain-select">Knowledge Domain</label>
+                    <select id="text-domain-select" required>
+                        <option value="" disabled selected>Select a domain</option>
+                        <option value="ai">Artificial Intelligence</option>
+                        <option value="cloud">Cloud Computing</option>
+                        <option value="virt-os">Virtualisation/OS</option>
+                    </select>
+                </div>
+
+                <div class="metadata-section">
+                    <div class="metadata-header">
+                        <h3>Metadata (Required)</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text-document-title">Document Title</label>
+                        <input type="text" id="text-document-title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text-document-author">Author</label>
+                        <input type="text" id="text-document-author" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text-publication-date">Publication Date</label>
+                        <input type="date" id="text-publication-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text-document-url">Source URL (Optional)</label>
+                        <input type="url" id="text-document-url">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text-additional-notes">Additional Notes (Optional)</label>
+                        <textarea id="text-additional-notes"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" id="text-submit-button" class="btn">Submit Text</button>
+            </form>
+        </div>
+
+        <!-- Processing Status Section -->
+        <div id="upload-status" class="card hidden">
+            <h2>Processing Status</h2>
+            <div class="status-container">
+                <div class="status-indicator">
+                    <div class="spinner"></div>
+                    <div id="status-message">Processing document...</div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <div id="progress-percentage">0%</div>
+                </div>
+                <div id="job-details">
+                    <p><strong>Job ID:</strong> <span id="job-id"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Complete Section -->
+        <div id="upload-complete" class="card hidden">
+            <h2>Upload Complete</h2>
+            <div class="complete-container">
+                <div class="success-icon">✓</div>
+                <p id="complete-message">Document processed successfully!</p>
+                <div id="complete-details"></div>
+                <button id="upload-another-btn" class="btn">Upload Another Document</button>
+            </div>
+        </div>
+
+        <!-- Upload Error Section -->
+        <div id="upload-error" class="card hidden">
+            <h2>Upload Error</h2>
+            <div class="error-container">
+                <div class="error-icon">✗</div>
+                <p id="error-message">An error occurred during processing.</p>
+                <div id="error-details"></div>
+                <button id="try-again-btn" class="btn">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Metadata Extraction Failure Section -->
+        <div id="metadata-extraction-failure" class="card hidden">
+            <h2>Metadata Extraction Failed</h2>
+            <div class="metadata-failure-container">
+                <p>We couldn't automatically extract metadata from your file. Please provide the required information below.</p>
+                
+                <form id="metadata-form">
+                    <div class="form-group">
+                        <label for="manual-document-title">Document Title</label>
+                        <input type="text" id="manual-document-title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="manual-document-author">Author</label>
+                        <input type="text" id="manual-document-author" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="manual-publication-date">Publication Date</label>
+                        <input type="date" id="manual-publication-date" required>
+                    </div>
+
+                    <button type="submit" id="metadata-submit-button" class="btn">Continue with Processing</button>
+                    <button type="button" id="metadata-cancel-button" class="btn btn-secondary">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bulk Upload Report Section -->
+        <div id="bulk-upload-report" class="card hidden">
+            <h2>Bulk Upload Report</h2>
+            <div class="bulk-report-container">
+                <p id="bulk-summary"></p>
+                
+                <h3>Successfully Processed Files</h3>
+                <ul id="success-files-list"></ul>
+                
+                <h3>Skipped Files</h3>
+                <ul id="skipped-files-list"></ul>
+                
+                <button id="bulk-done-button" class="btn">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Element -->
+    <div id="notification" class="notification"></div>
+</body>
+</html>

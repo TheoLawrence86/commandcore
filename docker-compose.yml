@@ -1,0 +1,83 @@
+services:
+  # Lightweight PostgreSQL with pgvector instead of full PostgresML
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: commandcore-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=commandcore
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Ingestion service for document processing
+  ingestion_service:
+    build:
+      context: ./src/ingestion_service
+      dockerfile: Dockerfile
+    container_name: commandcore-ingestion
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_DB=commandcore
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src/ingestion_service:/app
+      - ingestion_data:/app/data
+
+  # Orchestrator service for query processing
+  orchestrator:
+    build:
+      context: ./src/orchestrator
+      dockerfile: Dockerfile
+    container_name: commandcore-orchestrator
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_DB=commandcore
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./src/orchestrator:/app
+
+  # Web UI for the application
+  web:
+    image: nginx:alpine
+    container_name: commandcore-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/ui:/usr/share/nginx/html
+      - ./config/nginx:/etc/nginx/conf.d
+    depends_on:
+      - ingestion_service
+      - orchestrator
+
+volumes:
+  postgres_data:
+  ingestion_data:

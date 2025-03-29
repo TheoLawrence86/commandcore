@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommandCore - AI Agent Orchestration</title>
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+        }
+        
+        .hero h1 {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .hero p {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .options-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .option-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .option-card p {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .option-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .options-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .option-card {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+    <script src="js/common.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="navbar-brand">
+                <span class="navbar-brand-icon">⚙️</span> CommandCore
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="query_ui/index.html" class="nav-link">Query</a>
+                </li>
+                <li class="nav-item">
+                    <a href="ingestion_ui/index.html" class="nav-link">Ingestion</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="hero">
+            <h1>CommandCore</h1>
+            <p>AI Agent Orchestration with Multi-Agent Retrieval-Augmented Generation from domain-specific knowledge bases</p>
+        </div>
+        
+        <div class="options-container">
+            <div class="option-card">
+                <div class="option-icon">❓</div>
+                <h2>Ask Questions</h2>
+                <p>Query our knowledge base across AI, Cloud Computing, and Virtualisation/OS domains and get accurate, contextually relevant answers.</p>
+                <a href="query_ui/index.html" class="btn">Go to Query Interface</a>
+            </div>
+            
+            <div class="option-card">
+                <div class="option-icon">📄</div>
+                <h2>Upload Documents</h2>
+                <p>Contribute to our knowledge base by uploading domain-specific documents to improve future answers.</p>
+                <a href="ingestion_ui/index.html" class="btn">Go to Upload Interface</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>CommandCore v0.2 - AI Agent Orchestration System</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,424 @@
+/* CommandCore Ingestion UI Styles */
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+/* Input Mode Selector */
+.input-mode-selector h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.tab-container {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.tab-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+    color: var(--primary-color);
+}
+
+.tab-button.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* File Upload Area */
+.file-upload-container {
+    margin-top: 0.5rem;
+}
+
+.file-upload-area {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.file-upload-area:hover,
+.file-upload-area.dragover {
+    border-color: var(--secondary-color);
+    background-color: rgba(66, 153, 225, 0.05);
+}
+
+.file-upload-area p {
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+#file-input {
+    display: none;
+}
+
+#selected-file-name {
+    font-style: italic;
+}
+
+/* Metadata Section */
+.metadata-section {
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.metadata-header {
+    margin-bottom: 1.5rem;
+}
+
+.metadata-header h3 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Status Sections */
+#upload-status,
+#upload-complete,
+#upload-error,
+#metadata-extraction-failure,
+#bulk-upload-report {
+    display: none;
+}
+
+#upload-status.show,
+#upload-complete.show,
+#upload-error.show,
+#metadata-extraction-failure.show,
+#bulk-upload-report.show,
+#upload-status:not(.hidden),
+#upload-complete:not(.hidden),
+#upload-error:not(.hidden),
+#metadata-extraction-failure:not(.hidden),
+#bulk-upload-report:not(.hidden) {
+    display: block !important;
+}
+
+.status-container {
+    padding: 1.5rem;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background-color: rgba(66, 153, 225, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+#status-message {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1.05rem;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid var(--secondary-color);
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin-right: 1rem;
+    box-shadow: 0 0 10px rgba(66, 153, 225, 0.3);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Progress Bar */
+.progress-container {
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-top: 25px;
+}
+
+.progress-container::before {
+    content: 'Upload Progress';
+    position: absolute;
+    top: 0px;
+    left: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 24px;
+    background-color: #edf2f7;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    transition: width 0.3s ease;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    min-width: 5px; /* Always show at least a small bit of progress */
+    box-shadow: 0 2px 8px rgba(66, 153, 225, 0.5);
+}
+
+#progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.5s infinite;
+    transform: translateX(-100%);
+}
+
+.uploading #progress-fill {
+    animation: pulse 1.5s infinite alternate;
+}
+
+#progress-percentage {
+    text-align: center;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Complete & Error Containers */
+.complete-container,
+.error-container,
+.metadata-failure-container,
+.bulk-report-container {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.success-icon {
+    color: var(--success-color);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.error-icon {
+    color: var(--error-color);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+#complete-message,
+#error-message {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+#complete-details,
+#error-details {
+    background-color: var(--light-bg);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+/* Bulk Upload Report */
+.bulk-report-container h3 {
+    color: var(--primary-color);
+    margin: 1.5rem 0 0.8rem;
+    font-size: 1.2rem;
+}
+
+#success-files-list,
+#skipped-files-list {
+    list-style-type: none;
+    text-align: left;
+    padding: 0;
+}
+
+#success-files-list li,
+#skipped-files-list li {
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--light-bg);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+#success-files-list li:last-child,
+#skipped-files-list li:last-child {
+    border-bottom: none;
+}
+
+#success-files-list li .file-success-icon {
+    color: var(--success-color);
+    margin-right: 0.5rem;
+}
+
+#skipped-files-list li .file-error-icon {
+    color: var(--error-color);
+    margin-right: 0.5rem;
+}
+
+/* Buttons */
+#upload-another-btn,
+#try-again-btn,
+#metadata-submit-button,
+#metadata-cancel-button,
+#bulk-done-button {
+    margin-top: 1rem;
+}
+
+#metadata-cancel-button {
+    margin-left: 1rem;
+}
+
+/* Mode containers */
+.mode-container {
+    margin-bottom: 2rem;
+}
+
+/* Notification */
+.notification {
+    position: fixed;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: bottom 0.3s ease;
+}
+
+.notification.show {
+    bottom: 20px;
+}
+
+.notification.success {
+    background-color: var(--success-color);
+}
+
+.notification.error {
+    background-color: var(--error-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .input-mode-selector,
+    .mode-container,
+    #upload-status,
+    #upload-complete,
+    #upload-error,
+    #metadata-extraction-failure,
+    #bulk-upload-report {
+        padding: 1.5rem;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .tab-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+}
