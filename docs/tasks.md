@@ -20,6 +20,11 @@ This document tracks the specific tasks to be completed for the CommandCore proj
 - [ ] Install and configure pgvector extension
 - [ ] Implement knowledge chunks schema across all instances
 - [ ] Configure vector indexes with HNSW for performance
+- [x] Implement and automate deployment of vector similarity search SQL function
+  - [x] Create SQL function with proper type handling and parameter naming
+  - [x] Handle NULL values for "All Domains" filtering
+  - [x] Fix function signature mismatches with overloaded functions
+  - [x] Add to Makefile for automatic deployment on system startup
 - [ ] Create database roles and permissions
 - [ ] Set up replication for high availability
 - [ ] Configure database backup procedures
